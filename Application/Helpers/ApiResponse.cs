@@ -14,14 +14,14 @@ namespace Application.Helpers
         public int StatusCode { get; set; }
         public string Title { get; set; }
         public string Message { get; set; }
-        public string Discription { get; set; }
-        public ApiResponse(object data, int statusCode, string title, string message, string discription) 
+        public string Description { get; set; }
+        public ApiResponse(object data, int statusCode, string title, string message, string description) 
         {
             Data = data;
             StatusCode = statusCode;
             Title = title;
             Message = message;
-            Discription = discription;
+            Description = description;
         }
         public override string ToString()
         {

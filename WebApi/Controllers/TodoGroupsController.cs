@@ -20,16 +20,28 @@ namespace WebApi.Controllers
         }
         // GET: api/TodoGroups/Get
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult>Get()
         {
-            return new string[] { "value1", "value2" };
+            var modelvms = await _service.TodoGroupService.Get();
+            if (modelvms == null || modelvms.Count <= 0)
+                return NotFound(ApiResponseBuilder.GenerateNotfound("Get Failed", "Record notfound"));
+            return Ok(ApiResponseBuilder.GenerateOK(modelvms,200, "Ok", $"{modelvms.Count}record (s) Fetched"));
         }
 
         // GET api/TodoGroups/Get/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            if (id <= 0)
+            
+                return BadRequest(ApiResponseBuilder.GenerateBadRequest("Get Failed", "Invalid input"));
+            
+            var modelDto = await _service.TodoGroupService.Get(id);
+            if (modelDto == null)
+            
+                return NotFound(ApiResponseBuilder.GenerateNotfound("Get Failed", $"Record with {id} Not Found"));
+            
+            return Ok(ApiResponseBuilder.GenerateOK(modelDto, 200, "Ok", $"Record with{id} fetched"));
         }
 
         // POST api/TodoGroups/Create
@@ -60,16 +72,49 @@ namespace WebApi.Controllers
            return Ok(ApiResponseBuilder.GenerateOK(createdDto,200, "Created Successfully", $"Record created at api/TodoGroup/Get/{createdDto.Id}"));
         }
 
-        // PUT api/TodoGroups/Edit/5
+        // PUT api/TodoGroups/Update/5
         [HttpPut("{id}")]
-        public void Edit(int id, [FromBody] string value)
+        public async Task<IActionResult> Update(int id, [FromBody] TodoGroupDto modelDto)
         {
+            if (id <= 0 || modelDto == null || modelDto.Id != id)
+            {
+                return BadRequest(ApiResponseBuilder.GenerateBadRequest("Update Failed", "Invalid input"));
+            }
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.GetModelStateErrors();
+                if (errors != null && errors.Count > 0)
+                {
+                    var msgBuilder = new StringBuilder();
+                    foreach (var error in errors)
+                    {
+                        msgBuilder.AppendLine(error.ToString());
+                        return BadRequest(ApiResponseBuilder.GenerateBadRequest("Update failed", msgBuilder.ToString()));
+                    }
+                }
+            }
+            var updatedDto = await _service.TodoGroupService.Update(modelDto);
+            if (updatedDto == null)
+            {
+                return BadRequest(ApiResponseBuilder.GenerateBadRequest("Update failed", "some error occurd"));
+            }
+            return Ok(ApiResponseBuilder.GenerateOK(updatedDto, 200, "OK", "Record updated successfully"));
         }
 
         // DELETE api/TodoGroups/Delete/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task <IActionResult>Delete(int id)
         {
+            if(id<=0)
+            {
+                return BadRequest(ApiResponseBuilder.GenerateBadRequest("Delete failed", "Invalid input"));
+            }
+            var rowsAffected = await _service.TodoGroupService.Delete(id);
+            if(rowsAffected<=0)
+            {
+                return BadRequest(ApiResponseBuilder.GenerateBadRequest("Delete Failed", "There might be active child record(s)"));
+            }
+            return Ok(ApiResponseBuilder.GenerateOK(rowsAffected, 200, "Ok", $"Record with id {id} Deleted"));
         }
     }
 }
