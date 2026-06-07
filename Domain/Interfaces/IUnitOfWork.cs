@@ -9,6 +9,7 @@ namespace Domain.Interfaces
     public interface IUnitOfWork:IDisposable
     {
         public ITodoGroupRepository TodoGroupRepository { get; }
+        public ITodoListRepository TodoListRepository { get; }
         Task<int> SaveChanges();
     }
 }

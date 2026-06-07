@@ -13,11 +13,13 @@ namespace Infrastructure
     {
         private readonly AppDbContext _context;
         public ITodoGroupRepository TodoGroupRepository { get; }
+        public ITodoListRepository TodoListRepository { get; } 
 
         public UnitOfWork(AppDbContext context)
         {
             _context = context;
             TodoGroupRepository = new TodoGroupRepository(_context);
+            TodoListRepository = new TodoListRepository(_context);
         }
 
         public void Dispose()

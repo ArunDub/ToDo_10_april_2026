@@ -9,5 +9,6 @@ namespace Application.Intrerfaces
     public interface IDataService
     {
         ITodoGroupService TodoGroupService { get; }
+        ITodoListService TodoListService { get; }
     }
 }

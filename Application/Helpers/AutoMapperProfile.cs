@@ -9,9 +9,14 @@ namespace Application.Helpers
     {
         public AutoMapperProfile()
         {
+            //TodoGroup
             CreateMap<TodoGroupDto, TodoGroup>();
             CreateMap<TodoGroup, TodoGroupDto>();
             CreateMap<TodoGroup, TodoGroupVm>();
+            //TodoList
+            CreateMap<TodoListDto, TodoList>();
+            CreateMap<TodoList, TodoListDto>();
+            CreateMap<TodoList, TodoListVm>();
         }
     }
 }
