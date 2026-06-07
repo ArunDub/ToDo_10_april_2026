@@ -6,6 +6,6 @@
         public int? TodoGroupId{ get; set; }
         public string ListName { get; set; }
         public DateTime CreatedOn { get; set; }
-        public TodoGroup TodoGroup { get; set; }
+        public virtual TodoGroup TodoGroup { get; set; }
     }
 }

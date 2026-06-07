@@ -10,12 +10,15 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
+using WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 //Connect to Sql Server Database
 
 var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connections String Default Connectionstring Not Found");
-builder.Services.AddDbContext<AppDbContext>(Options => Options.UseSqlServer(connectionstring));
+builder.Services.AddDbContext<AppDbContext>(Options => Options
+.UseLazyLoadingProxies(true)
+.UseSqlServer(connectionstring));
 //Add Data Related Service
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
@@ -44,7 +47,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseMiddleware<CustomExceptionMiddleWare>();
 app.UseAuthorization();
 
 app.MapControllers();
