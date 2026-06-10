@@ -10,5 +10,7 @@ namespace Application.Intrerfaces
     {
         ITodoGroupService TodoGroupService { get; }
         ITodoListService TodoListService { get; }
+        ITodoService TodoService { get; } 
+
     }
 }

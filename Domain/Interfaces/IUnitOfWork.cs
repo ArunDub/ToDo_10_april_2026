@@ -10,6 +10,8 @@ namespace Domain.Interfaces
     {
         public ITodoGroupRepository TodoGroupRepository { get; }
         public ITodoListRepository TodoListRepository { get; }
+        public ITodoRepository TodoRepository { get; } 
+
         Task<int> SaveChanges();
     }
 }

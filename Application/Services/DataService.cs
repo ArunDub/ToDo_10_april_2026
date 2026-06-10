@@ -16,17 +16,20 @@ namespace Application.Services
         private readonly IMapper _mapper;
         public ITodoGroupService TodoGroupService { get; }
         public ITodoListService TodoListService { get; } 
+        public ITodoService TodoService { get; }
         public DataService(
          IUnitOfWork unitOfWork,
          IMapper mapper,
          IRepository<TodoGroup>todoGroupsRepo,
-         IRepository<TodoList>todoListsRepo
-         )
+         IRepository<TodoList>todoListsRepo,
+         IRepository<Todo>todosRepo            
+            )
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             TodoGroupService = new TodoGroupService(_unitOfWork, _mapper, todoGroupsRepo);
             TodoListService = new TodoListService(_unitOfWork, _mapper, todoListsRepo);
+            TodoService = new TodoService(_unitOfWork, _mapper, todosRepo);
 
         }
     }

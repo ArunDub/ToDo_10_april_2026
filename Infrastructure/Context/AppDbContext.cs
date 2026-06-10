@@ -14,6 +14,8 @@ namespace Infrastructure.Context
         {       
         }
         public DbSet<TodoGroup> TodoGroups { get; set; }
-        public DbSet<TodoList> TodoLists { get; set; } 
+        public DbSet<TodoList> TodoLists { get; set; }
+        public DbSet<Todo> Todos { get; set; } 
+
     }
 }

@@ -17,6 +17,10 @@ namespace Application.Helpers
             CreateMap<TodoListDto, TodoList>();
             CreateMap<TodoList, TodoListDto>();
             CreateMap<TodoList, TodoListVm>();
+            //Todo
+            CreateMap<TodoDto, Todo>();
+            CreateMap<Todo, TodoDto>();
+            CreateMap<Todo, TodoVm>();
         }
     }
 }
