@@ -32,6 +32,7 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
+           // throw new Exception("Test Exception ",new Exception("Test Inner Exception"));
             if (id <= 0)
             
                 return BadRequest(ApiResponseBuilder.GenerateBadRequest("Get Failed", "Invalid input"));

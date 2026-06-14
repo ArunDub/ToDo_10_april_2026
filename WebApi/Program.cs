@@ -9,10 +9,18 @@ using Infrastructure.Repositories;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Serilog;
 using System.Text.Json.Serialization;
 using WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+//Create Logger from settings from appsettings.json
+var logger = new LoggerConfiguration()
+.ReadFrom.Configuration(builder.Configuration)
+.CreateLogger();
+//Add Logger
+Log.Logger = logger;
+builder.Host.UseSerilog(logger);
 //Connect to Sql Server Database
 
 var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connections String Default Connectionstring Not Found");
@@ -48,6 +56,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseMiddleware<CustomExceptionMiddleWare>();
+//Use Serilog
+app.UseSerilogRequestLogging();
 app.UseAuthorization();
 
 app.MapControllers();
