@@ -3,4 +3,5 @@
   <Project Path="Domain/Domain.csproj" />
   <Project Path="Infrastructure/Infrastructure.csproj" />
   <Project Path="WebApi/WebApi.csproj" Id="55dd5142-88ad-443e-9a1a-65798f6a07ad" />
+  <Project Path="WebApp/WebApp.csproj" Id="df9b959e-bbb9-46fd-8cfb-61abb13f8476" />
 </Solution>
