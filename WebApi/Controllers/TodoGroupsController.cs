@@ -19,7 +19,7 @@ namespace WebApi.Controllers
             _service = service;
         }
         // GET: api/TodoGroups/Get
-        [HttpGet]
+        [HttpGet("Get")]
         public async Task<IActionResult>Get()
         {
             var modelvms = await _service.TodoGroupService.Get();

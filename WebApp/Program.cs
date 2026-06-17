@@ -1,8 +1,20 @@
+using WebApp.ServiceInterfaces;
+using WebApp.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+//Add Named HTTP CLIENT
 
+builder.Services.AddHttpClient("WebApiClient", (HttpClient) =>
+{
+    HttpClient.BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"]);
+});
+//AddHttpClientService
+builder.Services.AddScoped<IHttpClientService, HttpClientService>();
+//Add DataService
+builder.Services.AddScoped<IDataService, DataService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
