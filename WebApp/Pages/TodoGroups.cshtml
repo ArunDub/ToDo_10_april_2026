@@ -1,0 +1,60 @@
+﻿@page
+@model TodoGroupsModel
+@{
+    ViewData["Title"] = "TodoGroups";
+}
+<section class="content pt-3 pb3">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-12">
+                <!-- TO DO List -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="ion ion-clipboard mr-1"></i>
+                            Todo Groups
+                        </h3>
+
+        
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if(Model.modelVm.Count>=0)
+                        {
+                            <ul class="todo-list" data-widget="todo-list">
+                                @foreach (var item in Model.modelVm)
+                                {
+                                    <li>
+                                        <!-- todo text -->
+                                        <span class="text">@item.GroupName</span>
+
+                                        <!-- General tools such as edit or delete-->
+                                        <div class="tools">
+                                            <i class="fas fa-edit"></i>
+                                            <i class="fas fa-trash"></i>
+                                        </div>
+                                    </li>
+                                }
+
+                            </ul>
+                        }
+                        else
+                        {
+                            <p>Record Not found</p>
+                        }
+
+                        
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+                        <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</button>
+                    </div>
+                </div>
+                <!-- /.card -->
+
+            </div>
+        </div>
+
+    </div>
+</section>
