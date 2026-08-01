@@ -2,6 +2,7 @@ using Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using NToastNotify;
 using WebApp.ServiceInterfaces;
 
 namespace WebApp.Pages
@@ -10,9 +11,12 @@ namespace WebApp.Pages
     {
         
         private readonly IDataService _dataService;
-        public TodoGroupsModel(IDataService dataService)
+        private readonly IToastNotification _toastr;
+        
+        public TodoGroupsModel(IDataService dataService, IToastNotification toastr)
         {
             _dataService = dataService;
+            _toastr = toastr;
         }
         public List<TodoGroupVm> modelVm { get; set; }
         public async Task<IActionResult> OnGet() 
@@ -25,21 +29,21 @@ namespace WebApp.Pages
                 {
                     modelVm = response.Data != null ? JsonConvert.DeserializeObject<List<TodoGroupVm>>(response.Data.ToString()) : null;
                     message = $"Message{response.Message}<br/>Description:{response.Description}";
-                   
+                    _toastr.AddSuccessToastMessage(message);
                 }
                 else
                 {
                     message = $"Title:{response.Title}<br/>Message:{response.Message}";
-                    //Toaster.AddErrorToastMessage(message);
-                  
+                    _toastr.AddErrorToastMessage(message);
+
                 }
 
             }
             else
             {
                 message = "Could not get response from API";
-                //Toaster.AddInfoToastermessage(message);
-               
+                _toastr.AddInfoToastMessage(message);
+
             }
             return Page();
         }

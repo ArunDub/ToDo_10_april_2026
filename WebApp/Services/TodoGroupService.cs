@@ -16,23 +16,23 @@ namespace WebApp.Services
             return await _httpClientService.Get("TodoGroups/Get", false);
         }
 
-        public Task<ApiResponse> Get(int Id)
+        public async Task<ApiResponse> Get(int Id)
         {
-            throw new NotImplementedException();
+            return await _httpClientService.Get("TodoGroups/Get", false,Id);
+        }  
+        public async Task<ApiResponse> Create(TodoGroupDto dto)
+        {
+            return await _httpClientService.Post("TodoGroups/Create", false, dto);
         }
-        //public Task<ApiResponse> Create(TodoGroupDto dto)
-        //{
-        //    throw new NotImplementedException();
-        //}     
-        //public Task<ApiResponse> Edit(int Id, TodoGroupDto modelDto)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public async Task<ApiResponse> Edit(int Id, TodoGroupDto modelDto)
+        {
+            return await _httpClientService.Put("TodoGroups/Update", false, Id, modelDto);
+        }
 
-        //public Task<ApiResponse> Delete(int Id)
-        //{
-        //    throw new NotImplementedException();
-        //}
-               
+        public async Task<ApiResponse> Delete(int Id)
+        {
+            return await _httpClientService.Delete("TodoGroups/Delete", false, Id);
+        }
+
     }
 }

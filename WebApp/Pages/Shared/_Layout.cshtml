@@ -118,7 +118,8 @@
     <script src="~/Plugins/jquery/dist/jquery.min.js"></script>
     <script src="~/Plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/adminlte.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>    
+    <script src="~/js/site.js" asp-append-version="true"></script>  
+    @await Component.InvokeAsync("NToastNotify")
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

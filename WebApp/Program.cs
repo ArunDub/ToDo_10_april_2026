@@ -1,10 +1,15 @@
+using NToastNotify;
 using WebApp.ServiceInterfaces;
 using WebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
-builder.Services.AddRazorPages();
+
+var mvcBuilder =builder.Services.AddRazorPages().AddNToastNotifyToastr(new ToastrOptions()
+{
+    ProgressBar = true,
+    PositionClass = ToastPositions.TopRight
+});
 //Add Named HTTP CLIENT
 
 builder.Services.AddHttpClient("WebApiClient", (HttpClient) =>
@@ -27,7 +32,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+//Use NToastNotify
+app.UseNToastNotify();
 app.UseRouting();
 
 app.UseAuthorization();
