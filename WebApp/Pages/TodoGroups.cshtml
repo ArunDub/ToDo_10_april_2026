@@ -15,8 +15,16 @@
                             <i class="ion ion-clipboard mr-1"></i>
                             Todo Groups
                         </h3>
-
-        
+                        <div class="card-tools w-50">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control form-control-navbar" placeholder="Enter Name">
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary" onclick="Add(this)">
+                                        <i class="fas fa-plus"></i> Add new item
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -48,13 +56,43 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
-                        <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</button>
                     </div>
                 </div>
                 <!-- /.card -->
 
             </div>
         </div>
-
     </div>
 </section>
+@section Scripts{
+    <script type="text/javascript">
+    function Add(ctrl){
+        var txtName=$(ctrl).parent().prev('input[type=text]');
+        var name=$(txtName).val();
+        if(name!='')
+        {
+            var btnHtml=$(ctrl).html();
+            $(ctrl).attr('disabled',true);
+            $(ctrl).html('<i class="fa fa-spinner fa-spin"></i> wait');
+            $.get('?Handler=Add',{name:name})
+            .done(function(data){
+                $(txtName).val();
+                $(ctrl).attr('disabled',false);
+                $(ctrl).html(btnHtml);
+                toastr.info(data,'',{
+                onHidden:function(){
+                window.location.reload();                
+                }
+                
+            })
+         });
+        }
+        else
+        {
+            toastr.error('Pls enter Name');
+        }
+
+    }    
+    
+    </script>
+}

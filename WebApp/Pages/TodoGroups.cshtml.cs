@@ -1,3 +1,4 @@
+using Application.Dtos;
 using Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -46,6 +47,29 @@ namespace WebApp.Pages
 
             }
             return Page();
+        }
+
+        public async Task<IActionResult> OnGetADD(string name)
+        {
+            var modelDto = new TodoGroupDto
+            {
+                GroupName = name,
+                CreatedOn=DateTime.Now,
+                
+            };
+            var response = await _dataService.TodoGroup.Create(modelDto);
+            var message = "Could not get response from API";
+            if (response != null)
+            {
+                if (response.StatusCode == 200)
+                {
+                   var  createdDto = response.Data != null ? JsonConvert.DeserializeObject<TodoGroupDto> (response.Data.ToString()) : null;
+                    message = $"Message{response.Message}<br/>Description:{response.Description}";
+                }
+                else
+                message = $"Title:{response.Title}<br/>Message:{response.Message}";
+            }
+            return new JsonResult(message);
         }
     }
 }
