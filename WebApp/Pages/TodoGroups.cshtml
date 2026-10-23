@@ -35,12 +35,15 @@
                                 {
                                     <li>
                                         <!-- todo text -->
-                                        <span class="text">@item.GroupName</span>
+                                        <span id="@($"spanName-{item.Id}")" class="text">@item.GroupName</span>
+                                        <input id="@($"txtName-{item.Id}")" type="text"  class="form-control form-control-navbar w-50 d-none" value="@item.GroupName" />
 
                                         <!-- General tools such as edit or delete-->
                                         <div class="tools">
-                                            <i class="fas fa-edit"></i>
-                                            <i class="fas fa-trash"></i>
+                                            <button id="@($"btnEdit-{item.Id}")" type="button" class="btn btn-warning btn-sm" onclick="Edit('@item.Id')"><i class="fas fa-edit"></i></button>
+                                            <button id="@($"btnDelete-{item.Id}")" type="button" class="btn btn-danger btn-sm" onclick="Delete('@item.Id')"><i class="fas fa-trash"></i></button>
+                                            <button id="@($"btnSave-{item.Id}")" type="button" class="btn btn-success btn-sm d-none" onclick="Save('@item.Id')"><i class="fas fa-save"></i></button>
+                                            <button id="@($"btnCancel-{item.Id}")" type="button" class="btn btn-secondary btn-sm d-none" onclick="Cancel('@item.Id')"><i class="fas fa-times"></i></button>
                                         </div>
                                     </li>
                                 }
@@ -64,6 +67,8 @@
         </div>
     </div>
 </section>
+
+//https://www.youtube.com/watch?v=xBIOlQMQot4&list=PLQr7op4-p7tMl_c0gryHrGIrNkBtGkLsY&index=19
 @section Scripts{
     <script type="text/javascript">
     function Add(ctrl){
@@ -91,8 +96,37 @@
         {
             toastr.error('Pls enter Name');
         }
+    }  
+    function Edit(id){
+        //hide name
+            $('#spanName-' + id).removeClass('d-inline').addClass('d-none');
+        //Hide Edit button
+        $('#btnEdit-' + id).removeClass('d-inline').addClass('d-none');
+        //hide Delete Button
+        $('#btnEdit-' + id).removeClass('d-inline').addClass('d-none');
 
-    }    
+        //Show input text
+        $('#txtName-' + id).removeClass('d-none').addClass('d-inline');
+        //show Save button
+        $('#btnSave-' + id).removeClass('d-none').addClass('d-inline');
+        //show Cancel button
+        $('#btnCancel-' + id).removeClass('d-none').addClass('d-inline');
+    }
+
+     function Cancel(id){
+        //show name
+        $('#spanName-'+id).removeClass('d-none').addClass('d-inline');
+        //showEdit Button'
+            $('#btnEdit-' + id).removeClass('d-none').addClass('d-inline');
+            //show Delete Button'
+            $('#btnDelete-' + id).removeClass('d-none').addClass('d-inline');
+            //Hide input text
+        $('#txtName-' + id).removeClass('d-inline').addClass('d-none');
+            //hide save button
+            $('#btnSave-' + id).removeClass('d-inline').addClass('d-none');
+            //hide Cancel button
+        $('#btnCancel-' + id).removeClass('d-inline').addClass('d-none');
+    }
     
     </script>
 }
