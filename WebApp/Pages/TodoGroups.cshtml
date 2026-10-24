@@ -67,8 +67,6 @@
         </div>
     </div>
 </section>
-
-//https://www.youtube.com/watch?v=xBIOlQMQot4&list=PLQr7op4-p7tMl_c0gryHrGIrNkBtGkLsY&index=19
 @section Scripts{
     <script type="text/javascript">
     function Add(ctrl){
@@ -127,6 +125,33 @@
             //hide Cancel button
         $('#btnCancel-' + id).removeClass('d-inline').addClass('d-none');
     }
+    function Save(id) {
+
+    var editedName = $('#txtName-' + id).val();
+
+    if (editedName != '') {
+
+        $.get('?handler=Edit', {
+            id: id,
+            editedName: editedName
+        })
+        .done(function (data) {
+
+            toastr.info(data, '', {
+                onHidden: function () {
+                    window.location.reload();
+                }
+            });
+
+        })
+        .fail(function () {
+            toastr.error('Update failed');
+        });
+
+    } else {
+        toastr.error('Pls Enter Name');
+    }
+}
     
     </script>
 }

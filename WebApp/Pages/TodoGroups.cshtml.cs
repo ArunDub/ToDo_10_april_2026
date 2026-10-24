@@ -71,5 +71,30 @@ namespace WebApp.Pages
             }
             return new JsonResult(message);
         }
+
+
+        public async Task<IActionResult> OnGetEdit(int id,string editedName) 
+        {
+            var modelDto = new TodoGroupDto
+            {
+                Id =id,
+                GroupName = editedName,
+                CreatedOn = DateTime.Now,
+
+            };
+            var response = await _dataService.TodoGroup.Edit(id,modelDto);
+            var message = "Could not get response from API";
+            if (response != null)
+            {
+                if (response.StatusCode == 200) 
+                {
+                    var editedDto = response.Data != null ? JsonConvert.DeserializeObject<TodoGroupDto>(response.Data.ToString()) : null;
+                    message = $"Message{response.Message}<br/>Description:{response.Description}";
+                }
+                else
+                    message = $"Title:{response.Title}<br/>Message:{response.Message}";
+            }
+            return new JsonResult(message);
+        }
     }
 }

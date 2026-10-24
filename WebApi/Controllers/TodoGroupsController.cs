@@ -74,7 +74,7 @@ namespace WebApi.Controllers
         }
 
         // PUT api/TodoGroups/Update/5
-        [HttpPut("{id}")]
+        [HttpPut("Update/{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] TodoGroupDto modelDto)
         {
             if (id <= 0 || modelDto == null || modelDto.Id != id)
